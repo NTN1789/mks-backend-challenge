@@ -1,14 +1,27 @@
-version: '3.8'
+version: '3.8' 
+
 services:
- postgres:
-    image: postgres
-    ports:
-      - 5432:5432
+  redis:
+    container_name: redis-cache
+    image: redis
     environment:
-     POSTGRES_USER: postgres
-     POSTGRES_PASSWORD: docker
-     POSTGRES_DB: catalgo-movie
-     environment:
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
+     -  REDIS_USER=redis
+     -  REDIS_PASSWORD=redis
+     -  REDIS_DB=projeto
+    ports:
+      - "6379:6379"  
+
+
+  postgres:
+    container_name: pg-banco
+    image: postgres
+    environment:
+     -  POSTGRES_USER=postgres
+     -  POSTGRES_PASSWORD=docker
+     -  POSTGRES_DB=catalgo-movie   
+    ports:
+      - 5432:5432   
+
+
+
  
