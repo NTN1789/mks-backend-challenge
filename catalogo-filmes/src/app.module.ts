@@ -1,7 +1,8 @@
 import { Module, forwardRef } from '@nestjs/common';
 
 import { ConfigModule } from '@nestjs/config';
-import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { ThrottlerGuard } from '@nestjs/throttler';
+import { ThrottlerModule } from '@nestjs/throttler';
 import { AppController } from './app.controller';
 import { APP_GUARD } from '@nestjs/core';
 import { AppService } from './app.service';
@@ -9,11 +10,19 @@ import { AuthModule } from './auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { FilmesModule } from './filmes/filmes.module';
 import { FilmesEntity } from './filmes/entity/filmes.entity';
+import { UserModule } from './usuario/usuario.module';
+import { UserEntity } from './usuario/entity/user.entity';
+import { AppCacheModule } from './cache/cache.module';
 @Module({
   imports: [
     ConfigModule.forRoot(),
-
+    ThrottlerModule.forRoot({
+      ttl: 60,
+      limit: 10,
+    }),
+    // forwardRef(()=> AppCacheModule),
     forwardRef(() => AuthModule),
+    forwardRef(() => UserModule),
     forwardRef(() => FilmesModule ),
 
     TypeOrmModule.forRoot({
@@ -23,7 +32,7 @@ import { FilmesEntity } from './filmes/entity/filmes.entity';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
-      entities: [FilmesEntity],
+      entities: [UserEntity,FilmesEntity],
       synchronize: process.env.ENV === 'development',
     }),
   ],

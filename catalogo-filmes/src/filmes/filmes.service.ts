@@ -23,8 +23,7 @@ export class  FilmesService{
 
       async  create( {nome,descricao,genero,lancamento,popularidade,linguagensDisponivel}:CreateFilmesDto){
          
-        // verificação se o email já está sendo usado 
-
+       
         if (
                 await this.filmesRepository.exists({
                         where: {

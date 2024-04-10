@@ -8,7 +8,9 @@ import { AuthService } from "./auth.service";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { FilmesModule } from "src/filmes/filmes.module";
-import { FilmesEntity } from "src/filmes/entity/filmes.entity";
+import { UserEntity } from "src/usuario/entity/user.entity";
+import { UserModule } from "src/usuario/usuario.module";
+
 
 @Module({
     
@@ -16,10 +18,10 @@ import { FilmesEntity } from "src/filmes/entity/filmes.entity";
             secret:String (process.env.JWT_SECRET)
      }),
      
-     forwardRef(() => FilmesModule), 
-   
+     forwardRef(() => UserModule), 
+     forwardRef(() => FilmesModule),
       
-     TypeOrmModule.forFeature([FilmesEntity])
+     TypeOrmModule.forFeature([UserEntity])
 ], 
 
      controllers:[authCotroller],

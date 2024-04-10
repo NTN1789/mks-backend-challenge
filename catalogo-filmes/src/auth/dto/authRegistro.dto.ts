@@ -1,8 +1,8 @@
 
-import { CreateFilmesDto } from "src/filmes/dto/create.filmes.dto";
+import {CreateUserDto} from "../../usuario/dto/create.user.dto";
 
 
-export class AuthRegisterDto  extends CreateFilmesDto {
+export class AuthRegisterDto  extends CreateUserDto {
  // extendendo a  função que ja foi criada e aproveitando dela 
 
 

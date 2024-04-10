@@ -6,7 +6,9 @@ import {
     forwardRef,
   } from '@nestjs/common';
   import { AuthService } from "../auth.service";
+  import { CacheService } from 'src/cache/cache.service';
  import { FilmesService } from 'src/filmes/filmes.service';
+import { UserService } from 'src/usuario/usuario.service';
   
   @Injectable()
   export class AuthGuard implements CanActivate {
@@ -15,7 +17,9 @@ import {
     constructor(
      
       private readonly authService: AuthService, 
-      private readonly userService: FilmesService,
+      private readonly userService: UserService,
+    //  private redisCache: CacheService
+ 
     ) {}
   
     async canActivate(context: ExecutionContext) {
@@ -24,6 +28,7 @@ import {
       const request = context.switchToHttp().getRequest();
   
       const { authorization } = request.headers;
+     
   
       try {
         const data = this.authService.checkToken(
@@ -39,7 +44,7 @@ import {
         return false;
       }
   
-      // pegando os daods do token
+    
     }
   }
   
